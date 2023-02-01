@@ -25,6 +25,9 @@ export class CarService {
         return { id, ...body }
     }
 
+    deleteCar(id: number) {
+        return `${id} Deleted`
+    }
 
 
 }
