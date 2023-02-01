@@ -17,7 +17,7 @@ export class CarController {
 
     @Get(':id')
     getCarInfo(
-        @Param('id', ParseIntPipe) id: number
+        @Param('id') id: number
     ) {
         return this.carService.getCarInfo(id)
     }
@@ -33,7 +33,7 @@ export class CarController {
     @Put(":id")
     editCar(
         @Body() body: createCarDto,
-        @Param('id', ParseIntPipe) id: number
+        @Param('id') id: string
     ) {
         return this.carService.editCar(id, body)
     }
@@ -41,7 +41,7 @@ export class CarController {
     @HttpCode(204)
     @Delete(':id')
     deleteCar(
-        @Param('id', ParseIntPipe) id: number
+        @Param('id') id: string
 
     ) {
         return this.carService.deleteCar(id)
