@@ -1,7 +1,15 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema({ versionKey: false })
+@Schema({
+    toJSON: {
+        transform(doc, ret, options) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+        },
+    }
+})
 export class CarModel extends Document {
 
     @Prop({ required: true })
@@ -106,4 +114,4 @@ export class CarModel extends Document {
     @Prop({ required: true })
     partyNo?: string
 }
-export const CarSchema = SchemaFactory.createForClass(CarModel);
+export const CarSchema = SchemaFactory.createForClass(CarModel)
