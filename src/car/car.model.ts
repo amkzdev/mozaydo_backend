@@ -1,8 +1,9 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({ versionKey: false })
 export class CarModel extends Document {
+
     @Prop({ required: true })
     title: string;
 
