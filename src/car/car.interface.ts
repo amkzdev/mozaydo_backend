@@ -30,9 +30,13 @@ export interface Car {
     violationCost?: string,
     leasingDebtCost?: string,
     maintenanceLoc?: string,
-    attachments?: string[],
     price?: number,
     totalPrice?: string,
     partyNo?: string
+
+}
+
+export interface CreateCarInteface extends Car {
+    attachments?: File[],
 
 }

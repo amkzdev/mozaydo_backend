@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Car, CreateCarInteface } from './car.interface';
 
 @Injectable()
 export class CarService {
@@ -10,8 +11,18 @@ export class CarService {
         ]
     }
 
-    getCarInfo(id: string) {
+    getCarInfo(id: number) {
         return ({ id, car: 'ماشین' })
+    }
+
+
+    addCar(body: CreateCarInteface) {
+        return body
+    }
+
+
+    editCar(id: number, body: Car) {
+        return { id, ...body }
     }
 
 
