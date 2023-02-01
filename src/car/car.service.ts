@@ -20,8 +20,8 @@ export class CarService {
     }
 
 
-    addCar(body: CreateCarInteface) {
-        return this.carModel.create([
+    async addCar(body: CreateCarInteface) {
+        return await this.carModel.create([
             {
                 ...body,
                 updatedAt: new Date(),
@@ -33,12 +33,11 @@ export class CarService {
 
 
     async editCar(id: string, body: Car) {
-        const item = await this.carModel.findOneAndUpdate({ '_id': id }, { ...body, updatedAt: new Date() }, { new: true }).exec()
-        return item
+        return await this.carModel.findOneAndUpdate({ '_id': id }, { ...body, updatedAt: new Date() }, { new: true }).exec()
     }
 
-    deleteCar(id: string) {
-        return this.carModel.findOneAndDelete({ '_id': id }).exec()
+    async deleteCar(id: string) {
+        return await this.carModel.findByIdAndDelete(id, { returnOriginal: true }).exec()
     }
 
 
