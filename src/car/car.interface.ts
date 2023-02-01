@@ -2,7 +2,7 @@ export interface Car {
 
     id?: string,
     title: string,
-    model: number,
+    model?: number,
     company?: string,
     trunkNumber?: string | number,
     milage?: number,
@@ -32,6 +32,7 @@ export interface Car {
     maintenanceLoc?: string,
     attachments?: string[],
     price?: number,
-    totalPrice?: string
+    totalPrice?: string,
+    partyNo?: string
 
 }
