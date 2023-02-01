@@ -1,3 +1,4 @@
+import { Exclude,Expose } from 'class-transformer';
 import { IsNumber, IsPositive, IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 
@@ -133,5 +134,27 @@ export class createCarDto {
     @IsNumber()
     @IsNotEmpty()
     partyNo?: string
+
+}
+
+export class CarResponseDto {
+
+    @Exclude()
+    created_at: Date;
+
+    @Exclude()
+    __v: string;
+
+    @Exclude()
+    _id:string
+
+    @Expose({ 'name': "id" })
+    transformCreatedAt() {
+        return this._id
+    }
+
+    // constructor(partial: Partial<ReportResponseDto>) {
+    //     Object.assign(this, partial)
+    // }
 
 }

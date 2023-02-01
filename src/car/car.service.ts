@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CarResponseDto } from 'src/dtos/car.dto';
 import { Car, CreateCarInteface } from './car.interface';
 import { CarModel, CarSchema } from './car.model';
 
@@ -8,12 +9,14 @@ import { CarModel, CarSchema } from './car.model';
 export class CarService {
     constructor(@InjectModel('cars') private carModel: Model<CarModel>) { }
 
-    getAllCars(queryParams?: any) {
-        return this.carModel.find({})
+    async getAllCars(queryParams?: any) {
+        const data = await this.carModel.find({}).exec()
+        return data
     }
 
-    getCarInfo(id: number) {
-        return this.carModel.find({ "_id": id })
+    async getCarInfo(id: number) {
+        const data = await this.carModel.find({ "_id": id }).exec()
+        return data?.[0] || {}
     }
 
 
@@ -30,11 +33,11 @@ export class CarService {
 
 
     editCar(id: string, body: Car) {
-        return this.carModel.updateOne({ '_id': id }, { ...body, updatedAt: new Date() })
+        return (this.carModel.findOneAndUpdate({ '_id': id }, { ...body, updatedAt: new Date() }).exec())
     }
 
     deleteCar(id: string) {
-        return this.carModel.deleteOne({ '_id': id })
+        return this.carModel.findOneAndDelete({ '_id': id }).exec()
     }
 
 
