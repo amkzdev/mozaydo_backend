@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CarResponseDto } from 'src/dtos/car.dto';
@@ -9,8 +9,9 @@ import { CarModel, CarSchema } from './car.model';
 export class CarService {
     constructor(@InjectModel('cars') private carModel: Model<CarModel>) { }
 
-    async getAllCars(queryParams?: any): Promise<CarResponseDto[]> {
-        const cars = await this.carModel.find().lean()
+    async getAllCars(filter?: Car | { [key: string]: any }): Promise<CarResponseDto[]> {
+        const cars = await this.carModel.find(filter).lean()
+        if(!cars.length) throw new NotFoundException
         return cars.map(item => new CarResponseDto(item))
     }
 

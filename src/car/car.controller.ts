@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Query, Post, Put } from '@nestjs/common';
 import { CarService } from './car.service'
 import { CarResponseDto, createCarDto } from '../dtos/car.dto'
 
@@ -11,8 +11,26 @@ export class CarController {
 
 
     @Get()
-    getAllCars(): Promise<CarResponseDto[]> {
-        return this.carService.getAllCars()
+    getAllCars(
+        @Query('title') title?: string,
+        @Query('model') model?: number,
+        @Query('partyNo') partyNo?: number,
+        @Query('minPrice') minPrice?: string,
+        @Query('maxPrice') maxPrice?: string,
+    ): Promise<CarResponseDto[]> {
+
+        const price = minPrice || maxPrice ? {
+            ...(minPrice && { $gte: parseFloat(minPrice) }),
+            ...(maxPrice && { $lte: parseFloat(maxPrice) })
+        } : undefined
+
+        const filters = {
+            ...(title && { title }),
+            ...(partyNo && { partyNo }),
+            ...(model && { model }),
+            ...(price && { price })
+        }
+        return this.carService.getAllCars(filters)
     }
 
     @Get(':id')
