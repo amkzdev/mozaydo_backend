@@ -9,30 +9,31 @@ import { CarModel, CarSchema } from './car.model';
 export class CarService {
     constructor(@InjectModel('cars') private carModel: Model<CarModel>) { }
 
-    async getAllCars(queryParams?: any) {
-        const data = await this.carModel.find({}).exec()
-        return data
+    async getAllCars(queryParams?: any): Promise<CarResponseDto[]> {
+        const cars = await this.carModel.find().lean()
+        return cars.map(item => new CarResponseDto(item))
     }
 
-    async getCarInfo(id: number) {
-        const data = await this.carModel.find({ "_id": id }).exec()
-        return data?.[0] || {}
+    async getCarInfo(id: number): Promise<CarResponseDto> {
+        return await this.carModel.findOne({ "id": id }).lean()
+
     }
 
 
-    async addCar(body: CreateCarInteface) {
-        const isCarExist = await this.carModel.exists({ 'partyNo': body.partyNo })
+    async addCar(body: CreateCarInteface): Promise<any | any> {
+
+        const isCarExist = await this.carModel.exists({ 'partyNo': body.partyNo },)
 
         if (isCarExist) return Promise.resolve({ message: 'Car Already Exist', status: 203 })
-        
-        return await this.carModel.create([
+
+        const item = await this.carModel.create(
             {
                 ...body,
                 updatedAt: new Date(),
                 createdAt: new Date()
             }
-        ])
-
+        )
+        return item
     }
 
 

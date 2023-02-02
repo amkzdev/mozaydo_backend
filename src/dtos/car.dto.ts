@@ -1,4 +1,4 @@
-import { Exclude,Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { IsNumber, IsPositive, IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 
@@ -133,28 +133,158 @@ export class createCarDto {
 
     @IsNumber()
     @IsNotEmpty()
-    partyNo?: string
+    partyNo?: number
 
 }
 
 export class CarResponseDto {
 
-    @Exclude()
-    created_at: Date;
+    @IsString()
+    @IsNotEmpty()
+    title: string
 
-    @Exclude()
-    __v: string;
+    @IsOptional()
+    @IsNumber()
+    model: number
 
-    @Exclude()
-    _id:string
+    @IsOptional()
+    @IsString()
+    company?: string
 
-    @Expose({ 'name': "id" })
-    transformCreatedAt() {
-        return this._id
-    }
 
-    // constructor(partial: Partial<ReportResponseDto>) {
-    //     Object.assign(this, partial)
+    @IsNumber()
+    @IsOptional()
+    trunkNumber?: string | number
+
+    @IsNumber()
+    @IsOptional()
+    milage?: number
+
+    @IsNumber()
+    @IsOptional()
+    shaftCount?: number
+
+    @IsString()
+    @IsOptional()
+    tip?: string
+
+    @IsString()
+    @IsOptional()
+    color?: string
+
+    @IsString()
+    @IsOptional()
+    gearType?: string
+
+    @IsString()
+    @IsOptional()
+    capacity?: string
+
+    @IsString()
+    @IsOptional()
+    plaque?: string
+
+    @IsString()
+    @IsOptional()
+    system?: string
+
+    @IsString()
+    @IsOptional()
+    carType?: string
+
+    @IsString()
+    @IsOptional()
+    manufacturerCountry?: string
+
+    @IsString()
+    @IsOptional()
+    chassisNumber?: string
+
+    @IsString()
+    @IsOptional()
+    cylinderCount?: string
+
+    @IsString()
+    @IsOptional()
+    motorNumber?: string
+
+    @IsString()
+    @IsOptional()
+    fuelType?: string
+
+    @IsString()
+    @IsOptional()
+    controlType?: string
+
+    @IsString()
+    @IsOptional()
+    automobileItemDesc?: string
+
+    @IsString()
+    @IsOptional()
+    markingCost?: string
+
+    @IsString()
+    @IsOptional()
+    municipalCost?: string
+
+    @IsString()
+    @IsOptional()
+    tabsareCost?: string
+
+    @IsString()
+    @IsOptional()
+    taxInJobs?: string
+
+    @IsString()
+    @IsOptional()
+    admissionCost?: string
+
+    @IsString()
+    @IsOptional()
+    parkingCost?: string
+
+    @IsString()
+    @IsOptional()
+    violationCost?: string
+
+    @IsString()
+    @IsOptional()
+    leasingDebtCost?: string
+
+    @IsString()
+    @IsOptional()
+    maintenanceLoc?: string
+
+    attachments?: File[]
+
+    @IsNumber()
+    @IsOptional()
+    price?: number | null
+
+    @IsNumber()
+    @IsOptional()
+    totalPrice?: string
+
+    @IsNumber()
+    @IsNotEmpty()
+    partyNo?: number
+
+    // @Exclude()
+    // _id?: number
+
+    // @Exclude()
+    // __v?: number
+
+    // @Expose({ name: "id" })
+    // partyNumber() {
+    //     if (this._id)
+    //         return this._id.toString()
+
     // }
+
+    constructor(partial: Partial<CarResponseDto>) {
+        Object.assign(this, partial)
+    }
 
 }

@@ -1,4 +1,5 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
+import { Exclude, Expose, Transform } from 'class-transformer';
 import { Document } from 'mongoose';
 
 @Schema({
@@ -112,6 +113,10 @@ export class CarModel extends Document {
     totalPrice?: string
 
     @Prop({ required: true })
-    partyNo?: string
+    partyNo?: number
+
+    @Exclude()
+    __v?: any;
+
 }
 export const CarSchema = SchemaFactory.createForClass(CarModel)

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CarService } from './car.service'
-import { createCarDto } from '../dtos/car.dto'
+import { CarResponseDto, createCarDto } from '../dtos/car.dto'
 
 @Controller('car')
 export class CarController {
@@ -11,7 +11,7 @@ export class CarController {
 
 
     @Get()
-    getAllCars() {
+    getAllCars(): Promise<CarResponseDto[]> {
         return this.carService.getAllCars()
     }
 

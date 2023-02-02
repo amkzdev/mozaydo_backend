@@ -32,7 +32,7 @@ export interface Car {
     maintenanceLoc?: string,
     price?: number,
     totalPrice?: string,
-    partyNo?: string,
+    partyNo?: number,
     createdAt?: Date,
     updatedAt?: Date;
 
