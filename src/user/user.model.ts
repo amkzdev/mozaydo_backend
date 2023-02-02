@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 export class UserModel extends Document {
 
     @Prop()
-    name: number
+    name: string
 
     @Prop({ required: true, unique: true })
     phone: string;

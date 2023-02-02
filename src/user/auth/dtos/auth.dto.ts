@@ -15,3 +15,14 @@ export class SignupDto {
     @MinLength(5)
     password: string;
 }
+
+export class SigninDto {
+
+    @IsString()
+    @Matches(/09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/, { message: "شماره تلفن صحیح نمی باشد." })
+    phone: string
+
+    @IsNotEmpty()
+    password: string
+
+}
