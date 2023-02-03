@@ -1,6 +1,6 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 import { ObjectID } from 'bson';
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { Document } from 'mongoose';
 import { UserType } from './user.interface';
 
@@ -13,6 +13,8 @@ import { UserType } from './user.interface';
         transform(doc, ret, options) {
             ret.id = ret._id;
             delete ret?._id;
+            delete ret?.password;
+            delete ret?.userType;
             delete ret?.__v;
         },
     }
@@ -44,6 +46,7 @@ export class UserModel extends Document {
 
     @Transform(({ value }) => value.toString(), { toPlainOnly: true })
     _id: ObjectID;
+
 
 
 }

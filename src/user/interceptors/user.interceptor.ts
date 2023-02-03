@@ -1,4 +1,4 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from "@nestjs/common";
+import { CallHandler, ExecutionContext, NestInterceptor, NotFoundException, UnauthorizedException ,ForbiddenException} from "@nestjs/common";
 import * as jwt from 'jsonwebtoken'
 
 
@@ -9,8 +9,13 @@ export class UserInterceptor implements NestInterceptor {
         const request = context.switchToHttp().getRequest()
         const token = request?.headers?.authorization?.split('Bearer ')[1]
 
-        const user = jwt.decode(token)
-        request.user = user
+        try {
+            const user = jwt.decode(token) || {}
+            request.user = user
+
+        } catch (error) {
+            throw new ForbiddenException
+        }
         return handler.handle()
     }
 }

@@ -6,6 +6,7 @@ import { SignupDto } from './auth/dtos/auth.dto';
 import { UserType, User } from './user.interface';
 import { UserService } from './user.service';
 import { UserInfo } from './decorators/userInfo.decorator';
+import { UpdateUserDto } from './dtos/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -52,8 +53,14 @@ export class UserController {
 
 
     @Put(":id")
-    updateUser() {
-        return this.userService.updateUser()
+    updateUser(
+        @Body() body: UpdateUserDto,
+        @Param('id') id: ObjectId,
+        @UserInfo() user: User
+
+    ) {
+
+        return this.userService.updateUser(id, body, user)
     }
 
 

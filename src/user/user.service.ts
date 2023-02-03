@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { hash } from 'bcryptjs';
 import { isObjectIdOrHexString, Model, ObjectId } from 'mongoose';
-import { User, UserType } from './user.interface';
+import { requestUserType, User, UserType } from './user.interface';
 import { UserModel } from './user.model';
 
 @Injectable()
@@ -29,7 +30,7 @@ export class UserService {
     }
 
     createUser(body: User) {
-        
+
         // return this.userModel.create({
         //     ...body,
         //     updatedAt: new Date(),
@@ -38,14 +39,38 @@ export class UserService {
 
     }
 
-    updateUser() {
-        return 'Update Info'
+    async updateUser(id: ObjectId, body: requestUserType, user: User) {
+
+        if (!this.userModel.exists({ id: id }) || !user)
+            throw new UnauthorizedException
+
+        if (this.isUserIsNotCreater(id, user))
+            throw new UnauthorizedException
+
+
+        const updatedItem = await this.userModel.findByIdAndUpdate(id,
+            {
+                password: await hash(body.password, 10),
+                name: body.name,
+                email: body.email,
+                ...(user.userType != UserType.USER && ({
+                    planDeadline: body.planDeadline,
+                    activePlanId: body.activePlanId
+                }))
+            }, { new: true })
+
+        return updatedItem
+
 
     }
 
     deleteUser() {
         return 'Delete Info'
 
+    }
+
+    isUserIsNotCreater(id: ObjectId | string, user: User) {
+        return (user.id != id && user.userType == UserType.USER)
     }
 
 }
