@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Query, Post, Put } from '@nestjs/common';
 import { CarService } from './car.service'
 import { CarResponseDto, createCarDto } from '../dtos/car.dto'
+import { User, UserType } from 'src/user/decorators/user.decorator';
 
 @Controller('car')
 export class CarController {
@@ -37,15 +38,19 @@ export class CarController {
     getCarInfo(
         @Param('id') id: number
     ) {
-        return this.carService.getCarInfo(id)
+        return 'Hello'
+        // return this.carService.getCarInfo(id)
     }
 
     @HttpCode(201)
     @Post()
     addNewCar(
-        @Body() body: createCarDto
+        @Body() body: createCarDto, @User() user :UserType
     ) {
-        return this.carService.addCar(body)
+        console.log(user)
+        // return 'hello'
+        // return user
+        return this.carService.addCar(body , user.id)
     }
 
     @Put(":id")

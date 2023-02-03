@@ -1,6 +1,13 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+
+enum UserType {
+    SUPERADMIN = "SUPERADMIN",
+    ADMIN = "ADMIN",
+    USER = "user"
+}
+
 @Schema()
 export class UserModel extends Document {
 
@@ -15,6 +22,10 @@ export class UserModel extends Document {
 
     @Prop()
     password: string
+
+
+    @Prop()
+    userType: UserType
 
 
 }

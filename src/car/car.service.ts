@@ -23,13 +23,14 @@ export class CarService {
     }
 
 
-    async addCar(body: CreateCarInteface): Promise<any | any> {
+    async addCar(body: CreateCarInteface, userId: number): Promise<any | any> {
+
+        const isUserHavePlan = true
 
         const isCarExist = await this.carModel.exists({ 'partyNo': body.partyNo },)
 
         if (isCarExist) return Promise.resolve({ message: 'Car Already Exist', status: 203 })
 
-        console.log(body)
 
         const item = await this.carModel.create(
             {
