@@ -7,7 +7,7 @@ import { PlanModel } from './plan.model';
 @Injectable()
 export class PlanService {
 
-    constructor(@InjectModel('cars') private planDB: Model<PlanModel>) { }
+    constructor(@InjectModel('plans') private planDB: Model<PlanModel>) { }
 
 
     async getAllPlans() {
