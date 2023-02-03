@@ -65,8 +65,11 @@ export class UserController {
 
 
     @Delete(":id")
-    deleteUser() {
-        return this.userService.deleteUser()
+    deleteUser(
+        @Param('id') id: ObjectId,
+        @UserInfo() user: User
+    ) {
+        return this.userService.deleteUser(id, user)
     }
 
 }

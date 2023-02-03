@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash } from 'bcryptjs';
-import { isObjectIdOrHexString, Model, ObjectId } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { requestUserType, User, UserType } from './user.interface';
 import { UserModel } from './user.model';
 
@@ -18,8 +18,6 @@ export class UserService {
     }
 
     async getUserInfo(id: ObjectId, user: User) {
-        if (!isObjectIdOrHexString(id))
-            throw new NotFoundException
 
         const targetUser = await this.userModel.findById(id).exec()
 
@@ -64,8 +62,12 @@ export class UserService {
 
     }
 
-    deleteUser() {
-        return 'Delete Info'
+    async deleteUser(id: ObjectId | string, user: User) {
+
+        if (user.userType == UserType.USER || user.userType == UserType.ADMIN)
+            throw new UnauthorizedException
+
+        return await this.userModel.findByIdAndDelete(id)
 
     }
 
