@@ -33,7 +33,7 @@ export class AuthService {
 
                 })
                 : ({
-                    activePlanId: -1,
+                    activePlanId: 0,
                     planDeadline: new Date('2030-12-12T00:00:00')
                 })
             )
