@@ -19,11 +19,24 @@ export class AuthService {
 
         const hashedPassword = await hash(password, 10)
 
+        const userTypeOfUser = userType ? userType : UserType.USER
+
         const user = await this.userModel.create({
             email,
             password: hashedPassword,
             phone,
-            userType: userType ? userType : UserType.USER
+            userType: userTypeOfUser,
+            ...(userTypeOfUser == 'user'
+                ? ({
+                    activePlanId: 0,
+                    planDeadline: new Date()
+
+                })
+                : ({
+                    activePlanId: -1,
+                    planDeadline: new Date('2030-12-12T00:00:00')
+                })
+            )
         })
 
         return await this.generateJWT(name, user.id, user.userType)

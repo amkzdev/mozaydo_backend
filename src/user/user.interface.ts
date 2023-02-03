@@ -1,10 +1,12 @@
 export interface User {
-    id?:string,
+    id?: string,
     name: string;
     phone: string;
     email?: string;
     password: string,
-    userType: UserType
+    userType: UserType,
+    activePlanId: string,
+    planDeadline: Date
 }
 
 export enum UserType {

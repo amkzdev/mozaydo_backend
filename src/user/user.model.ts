@@ -40,7 +40,7 @@ export class UserModel extends Document {
     activePlanId: string
 
     @Prop()
-    planRemaining: number
+    planDeadline: Date
 
     @Transform(({ value }) => value.toString(), { toPlainOnly: true })
     _id: ObjectID;
