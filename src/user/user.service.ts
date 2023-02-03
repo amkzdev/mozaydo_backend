@@ -4,22 +4,25 @@ import { Injectable } from '@nestjs/common';
 export class UserService {
 
     getAllUsers() {
+        return 'All Users'
+    }
+
+    getUserInfo() {
+        return 'User Info'
+    }
+
+    createUser() {
+        return 'Create Info'
 
     }
 
-    getUserInfo () {
+    updateUser() {
+        return 'Update Info'
 
     }
 
-    createUser () {
-
-    }
-
-    updateUser (){
-
-    }
-
-    deleteUser () {
+    deleteUser() {
+        return 'Delete Info'
 
     }
 
