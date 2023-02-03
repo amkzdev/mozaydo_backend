@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { CarResponseDto } from 'src/dtos/car.dto';
 import { Car, CreateCarInteface } from './car.interface';
 import { CarModel, CarSchema } from './car.model';
+import { isObjectIdOrHexString } from 'mongoose'
+
 
 @Injectable()
 export class CarService {
@@ -11,7 +13,7 @@ export class CarService {
 
     async getAllCars(filter?: Car | { [key: string]: any }): Promise<CarResponseDto[]> {
         const cars = await this.carModel.find(filter).lean()
-        if(!cars.length) throw new NotFoundException
+        if (!cars.length) throw new NotFoundException
         return cars.map(item => new CarResponseDto(item))
     }
 
@@ -27,6 +29,8 @@ export class CarService {
 
         if (isCarExist) return Promise.resolve({ message: 'Car Already Exist', status: 203 })
 
+        console.log(body)
+
         const item = await this.carModel.create(
             {
                 ...body,
@@ -39,11 +43,30 @@ export class CarService {
 
 
     async editCar(id: string, body: Car) {
-        return await this.carModel.findOneAndUpdate({ '_id': id }, { ...body, updatedAt: new Date() }, { new: true }).exec()
+
+        if (!isObjectIdOrHexString(id))
+            throw new NotFoundException
+
+        const car = this.carModel.findOneAndUpdate({ '_id': id }, { ...body, updatedAt: new Date() }, { new: true }).exec()
+
+        if (!car) {
+            throw new NotFoundException
+        }
+
+        return car
     }
 
     async deleteCar(id: string) {
-        return await this.carModel.findByIdAndDelete(id, { returnOriginal: true }).exec()
+        if (!isObjectIdOrHexString(id))
+            throw new NotFoundException
+
+        const car = await this.carModel.findByIdAndDelete(id, { returnOriginal: true }).exec()
+
+        if (!car) {
+            throw new NotFoundException
+        }
+
+        return Promise.resolve({ message: "Car Successfully Deleted" })
     }
 
 

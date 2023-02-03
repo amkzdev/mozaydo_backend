@@ -1,5 +1,5 @@
-import { Exclude, Expose } from 'class-transformer';
-import { IsNumber, IsPositive, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { Exclude, Expose, Type } from 'class-transformer';
+import { IsNumber, IsPositive, IsString, IsNotEmpty, IsOptional, IsArray, ValidateNested } from 'class-validator';
 
 
 
@@ -134,6 +134,12 @@ export class createCarDto {
     @IsNumber()
     @IsNotEmpty()
     partyNo?: number
+
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => Image)
+    images?: Image[]
 
 }
 
@@ -270,6 +276,13 @@ export class CarResponseDto {
     @IsNotEmpty()
     partyNo?: number
 
+
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => Image)
+    images?: Image[]
+
     // @Exclude()
     // _id?: number
 
@@ -287,4 +300,11 @@ export class CarResponseDto {
         Object.assign(this, partial)
     }
 
+}
+
+
+class Image {
+    @IsNotEmpty()
+    @IsString()
+    url: string
 }

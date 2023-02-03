@@ -35,10 +35,14 @@ export interface Car {
     partyNo?: number,
     createdAt?: Date,
     updatedAt?: Date;
+    images?: Image[]
 
+}
+interface Image {
+    url: string
 }
 
 export interface CreateCarInteface extends Car {
-    attachments?: File[],
+    // images?: File[],
 
 }

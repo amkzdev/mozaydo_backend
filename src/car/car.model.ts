@@ -2,6 +2,12 @@ import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { Document } from 'mongoose';
 
+
+interface Image {
+    url: string
+}
+
+
 @Schema({
     toJSON: {
         transform(doc, ret, options) {
@@ -117,6 +123,9 @@ export class CarModel extends Document {
 
     @Exclude()
     __v?: any;
+
+    @Prop()
+    images?: Array<Image>
 
 }
 export const CarSchema = SchemaFactory.createForClass(CarModel)

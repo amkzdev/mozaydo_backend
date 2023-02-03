@@ -53,7 +53,9 @@ export class CarController {
         @Body() body: createCarDto,
         @Param('id') id: string
     ) {
+
         return this.carService.editCar(id, body)
+
     }
 
     @HttpCode(204)
