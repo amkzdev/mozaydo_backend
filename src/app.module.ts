@@ -7,13 +7,15 @@ import { AppService } from './app.service';
 import { CarModule } from './car/car.module';
 import { UserInterceptor } from './user/interceptors/user.interceptor';
 import { UserModule } from './user/user.module';
+import { PlanModule } from './plan/plan.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/mozaydo'),
     ConfigModule.forRoot(),
     CarModule,
-    UserModule
+    UserModule,
+    PlanModule
   ],
   controllers: [AppController],
   providers: [AppService, {
