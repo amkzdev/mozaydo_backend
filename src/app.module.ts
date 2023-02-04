@@ -19,10 +19,10 @@ import { PlanModule } from './plan/plan.module';
   ],
   controllers: [AppController],
   providers: [AppService, 
-  //   {
-  //   provide: APP_INTERCEPTOR,
-  //   useClass: UserInterceptor
-  // }
+    {
+    provide: APP_INTERCEPTOR,
+    useClass: UserInterceptor
+  }
 ],
 })
 export class AppModule { }
