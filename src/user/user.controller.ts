@@ -19,7 +19,6 @@ export class UserController {
     ) { }
 
     @Roles(UserType.ADMIN, UserType.SUPERADMIN)
-    @UseGuards(AuthGuard)
     @Get()
     getAllUsers(
         @UserInfo() user: User
@@ -67,7 +66,6 @@ export class UserController {
     }
 
     @Roles(UserType.ADMIN, UserType.SUPERADMIN)
-    @UseGuards(AuthGuard)
     @Delete(":id")
     deleteUser(
         @Param('id') id: ObjectId,
