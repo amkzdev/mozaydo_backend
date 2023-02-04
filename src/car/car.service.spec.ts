@@ -1,4 +1,6 @@
+import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { CarModel, CarSchema } from './car.model';
 import { CarService } from './car.service';
 
 describe('CarService', () => {
@@ -6,7 +8,16 @@ describe('CarService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [CarService],
+      providers: [
+        {
+          provide:getModelToken('cars'),
+          useValue:CarModel
+        }
+        ,
+        CarService,
+
+
+      ],
     }).compile();
 
     service = module.get<CarService>(CarService);
