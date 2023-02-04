@@ -141,6 +141,11 @@ export class createCarDto {
     @Type(() => Image)
     images?: Image[]
 
+
+    @IsNotEmpty()
+    @IsNumber()
+    auctionNumber: number
+
 }
 
 export class CarResponseDto {
@@ -282,6 +287,10 @@ export class CarResponseDto {
     @ValidateNested({ each: true })
     @Type(() => Image)
     images?: Image[]
+
+    @IsOptional()
+    @IsNumber()
+    auctionNumber: number
 
     // @Exclude()
     // _id?: number

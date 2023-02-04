@@ -18,9 +18,11 @@ import { PlanModule } from './plan/plan.module';
     PlanModule
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_INTERCEPTOR,
-    useClass: UserInterceptor
-  }],
+  providers: [AppService, 
+  //   {
+  //   provide: APP_INTERCEPTOR,
+  //   useClass: UserInterceptor
+  // }
+],
 })
 export class AppModule { }

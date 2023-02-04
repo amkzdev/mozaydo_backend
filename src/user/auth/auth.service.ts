@@ -39,7 +39,7 @@ export class AuthService {
             )
         })
 
-        return await this.generateJWT(name, user.id, user.userType)
+        return ({ token: await this.generateJWT(name, user.id, user.userType), userType: user.userType })
 
     }
 
@@ -60,7 +60,7 @@ export class AuthService {
             throw new HttpException('Invalid Credentails', 400)
         }
 
-        return await this.generateJWT(user.name, user.id, user.userType)
+        return { token: await this.generateJWT(user.name, user.id, user.userType), userType: user.userType }
 
     }
 

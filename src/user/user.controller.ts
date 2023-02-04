@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Delete, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Put, Delete, UseGuards } from '@nestjs/common';
 import { Body, Param, Post, Query } from '@nestjs/common/decorators';
 import { ObjectId, StringSchemaDefinition } from 'mongoose';
 import { AuthService } from './auth/auth.service';
@@ -7,6 +7,8 @@ import { UserType, User } from './user.interface';
 import { UserService } from './user.service';
 import { UserInfo } from './decorators/userInfo.decorator';
 import { UpdateUserDto } from './dtos/user.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { Roles } from 'src/decorators/roles.decorator';
 
 @Controller('user')
 export class UserController {
@@ -16,7 +18,8 @@ export class UserController {
         private readonly authService: AuthService
     ) { }
 
-
+    @Roles(UserType.ADMIN, UserType.SUPERADMIN)
+    @UseGuards(AuthGuard)
     @Get()
     getAllUsers(
         @UserInfo() user: User
@@ -63,7 +66,8 @@ export class UserController {
         return this.userService.updateUser(id, body, user)
     }
 
-
+    @Roles(UserType.ADMIN, UserType.SUPERADMIN)
+    @UseGuards(AuthGuard)
     @Delete(":id")
     deleteUser(
         @Param('id') id: ObjectId,

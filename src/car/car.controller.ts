@@ -47,9 +47,6 @@ export class CarController {
     addNewCar(
         @Body() body: createCarDto, @UserInfo() user: UserType
     ) {
-        // console.log(user)
-        // return 'hello'
-        // return user
         return this.carService.addCar(body, user.id)
     }
 

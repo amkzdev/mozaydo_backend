@@ -127,5 +127,10 @@ export class CarModel extends Document {
     @Prop()
     images?: Array<Image>
 
+    @Prop()
+    auctionNumber: number
+
+
+
 }
 export const CarSchema = SchemaFactory.createForClass(CarModel)
